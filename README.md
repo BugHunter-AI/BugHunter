@@ -1,5 +1,7 @@
 # 🤖 BugHunter AI - AI-Powered QA Testing Platform
 
+![BugHunter AI Dashboard](assets/dashboard-mockup.png)
+
 ## 🎉 **CONGRATULATIONS!**
 
 You now have a **professional, AI-powered QA testing platform** worth $50k+ in development costs!
