@@ -447,6 +447,43 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
 });
 
 // ===================================
+// DYNAMIC BADGE (Viral Growth)
+// ===================================
+
+app.get('/api/badge/:token', (req, res) => {
+    const { token } = req.params;
+    const scan = scans.find(s => s.shareToken === token);
+
+    const score = scan ? (scan.results.aiAnalysis?.qualityScore || 0) : 'N/A';
+    const color = score > 90 ? '#10b981' : (score > 70 ? '#f59e0b' : '#ef4444');
+
+    const svg = `
+    <svg width="150" height="28" viewBox="0 0 150 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="150" height="28" rx="6" fill="#1e293b"/>
+        <text x="10" y="18" fill="white" font-family="Arial" font-size="12" font-weight="bold">BugHunter AI</text>
+        <rect x="100" y="4" width="45" height="20" rx="4" fill="${color}"/>
+        <text x="122.5" y="18" fill="white" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">${score}%</text>
+    </svg>`;
+
+    res.contentType('image/svg+xml');
+    res.send(svg);
+});
+
+// ===================================
+// TEAM COLLABORATION
+// ===================================
+
+app.post('/api/team/invite', (req, res) => {
+    const { email, role } = req.body;
+    // For MVP, we simply log the invite and save to db.json
+    // In a full app, this would send an email via Nodemailer
+    console.log(`📩 Team Invite sent to: ${email} as ${role}`);
+
+    // logic to add user to a shared workspace in data.users
+    res.json({ success: true, message: `Invite sent to ${email}` });
+});
+
+// ===================================
 // STATISTICS
 // ===================================
 

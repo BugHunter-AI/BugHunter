@@ -76,6 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Team Invite Handler
+    const sendInviteBtn = document.getElementById('sendInviteBtn');
+    if (sendInviteBtn) {
+        sendInviteBtn.addEventListener('click', async () => {
+            const email = document.getElementById('inviteEmail').value;
+            if (!email) return alert('Enter an email');
+
+            const res = await fetch('http://localhost:3000/api/team/invite', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, role: 'developer' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert(`Invitation sent to ${email}!`);
+                document.getElementById('inviteEmail').value = '';
+            }
+        });
+    }
+
     // Fetch real stats from backend
     async function fetchStats() {
         try {

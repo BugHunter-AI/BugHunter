@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 40px; color: #1e293b;">
+    <div
+        style="background: white; border-radius: 12px; padding: 32px; border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #ec4899; margin-bottom: 8px;">Your Monthly Audit Report 📊</h1>
+        <p style="color: #64748b;">Here is how your sites performed this month with BugHunter AI.</p>
+
+        <div style="background: #fdf2f8; border-radius: 8px; padding: 20px; margin: 24px 0;">
+            <p style="margin: 0; font-weight: bold; color: #ec4899;">Monthly Quality Score: {{score}}%</p>
+            <p style="margin: 4px 0 0; font-size: 14px; color: #db2777;">+{{growth}}% improvement from last month</p>
+        </div>
+
+        <h3 style="margin-bottom: 12px;">Summary of Issues</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="padding: 12px 0; border-bottom: 1px solid #f1f5f9;">🛡️ <strong>Bugs Caught:</strong>
+                {{totalBugs}}</li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #f1f5f9;">⚡ <strong>Time Saved:</strong> {{hoursSaved}}
+                hours</li>
+            <li style="padding: 12px 0;">✅ <strong>Fixed by AI:</strong> {{fixesApplied}}</li>
+        </ul>
+
+        <a href="https://bughunter-ai.com/dashboard"
+            style="display: block; text-align: center; background: #ec4899; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 32px;">View
+            Detailed Dashboard</a>
+
+        <p style="margin-top: 40px; font-size: 12px; color: #94a3b8; text-align: center;">
+            You are receiving this because you are an active BugHunter AI Pro subscriber.<br />
+            © 2026 BugHunter AI. All rights reserved.
+        </p>
+    </div>
+</body>
+
+</html>
