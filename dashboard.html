@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BugHunter AI</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="url(#gradient-logo)" />
+                        <path d="M18 10L24 16L18 22L12 16L18 10Z" fill="white" opacity="0.9" />
+                        <circle cx="18" cy="16" r="3" fill="white" />
+                        <defs>
+                            <linearGradient id="gradient-logo" x1="0" y1="0" x2="36" y2="36">
+                                <stop offset="0%" stop-color="#ec4899" />
+                                <stop offset="100%" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>BugHunter AI</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Overview
+                </a>
+                <a href="#" class="nav-item" data-section="new-scan">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                    </svg>
+                    New Scan
+                </a>
+                <a href="#" class="nav-item" data-section="history">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                    Scan History
+                </a>
+                <a href="#" class="nav-item" data-section="integrations">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    </svg>
+                    Integrations
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userNameDisplay">John Doe</span>
+                        <span class="user-plan">Pro Plan</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="sectionTitle">Overview</h1>
+                <div class="top-bar-actions">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" style="display:none">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <button class="btn-primary" id="quickScanBtn">+ Quick Scan</button>
+                    <div class="notification-trigger">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Overview Section -->
+                <section id="overviewSection" class="dashboard-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-label">Total Scans</span>
+                            <div class="stat-value" id="totalScans">24</div>
+                            <span class="stat-trend positive">+12% from last week</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Bugs Found</span>
+                            <div class="stat-value" id="totalBugs">142</div>
+                            <span class="stat-trend negative">+8 since yesterday</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Avg. Quality Score</span>
+                            <div class="stat-value" id="avgScore">82%</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Critical Issues</span>
+                            <div class="stat-value text-red" id="criticalBugs">12</div>
+                            <span class="stat-badge danger">Action required</span>
+                        </div>
+                    </div>
+
+                    <div class="layout-grid">
+                        <div class="chart-container card">
+                            <h3>Scan Activity</h3>
+                            <canvas id="scanChart"></canvas>
+                        </div>
+                        <div class="recent-activity card">
+                            <h3>Recent Scans</h3>
+                            <div id="recentScansList">
+                                <!-- Dynamic Content -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- New Scan Section -->
+                <section id="newScanSection" class="dashboard-section">
+                    <div class="card scan-config">
+                        <h2>Configure New Scan</h2>
+                        <p class="subtitle">Enter the URL of the website you want to audit for bugs.</p>
+
+                        <div class="scan-input-group">
+                            <label for="scanUrl">Website URL</label>
+                            <div class="input-with-button">
+                                <input type="url" id="scanUrl" placeholder="https://example.com"
+                                    value="https://example.com">
+                                <button class="btn-primary" id="runScanBtn">Start Scan</button>
+                            </div>
+                        </div>
+
+                        <div class="scan-options-grid">
+                            <div class="option-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="checkAccessibility" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <span class="option-name">Accessibility Audit</span>
+                                    <span class="option-desc">Check for WCAG compliance and ARIA issues.</span>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="checkSEO" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <span class="option-name">SEO Analysis</span>
+                                    <span class="option-desc">Analyze meta tags, headings, and structure.</span>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="checkPerformance" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <span class="option-name">Performance Metrics</span>
+                                    <span class="option-desc">Measure page load speed and Core Web Vitals.</span>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="fullScreenshot" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <span class="option-name">Visual Capture</span>
+                                    <span class="option-desc">Take a full-page screenshot of the results.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scanning Loader (Hidden by default) -->
+                    <div id="scanLoader" class="scan-loader hidden">
+                        <div class="loader-content">
+                            <div class="spinner"></div>
+                            <h2>BugHunter AI is Analyzing...</h2>
+                            <p id="loaderStatus">Initializing Playwright browser...</p>
+                            <div class="loader-steps">
+                                <div class="step-item active" id="step1">✓ Connecting to URL</div>
+                                <div class="step-item" id="step2">◌ Scanning for JS Errors</div>
+                                <div class="step-item" id="step3">◌ Checking Network Resources</div>
+                                <div class="step-item" id="step4">◌ Applying AI Analysis</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results View (Hidden by default) -->
+                    <div id="scanResults" class="scan-results hidden">
+                        <div class="results-header card">
+                            <div class="results-summary">
+                                <div class="results-score">
+                                    <svg viewBox="0 0 36 36" class="circular-chart">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" id="resultCircle" stroke-dasharray="85, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" class="percentage" id="resultScoreText">85%</text>
+                                    </svg>
+                                    <span>Quality Score</span>
+                                </div>
+                                <div class="results-meta">
+                                    <h2 id="resultUrl">example.com</h2>
+                                    <p id="resultTime">Scanned on Feb 3, 2026 • 2:45 PM</p>
+                                    <div class="tag-group">
+                                        <span class="tag" id="tagBugs">12 Bugs Found</span>
+                                        <span class="tag warning" id="tagWarnings">4 Warnings</span>
+                                    </div>
+                                </div>
+                                <div class="results-actions">
+                                    <button class="btn-outline" id="downloadPdfBtn">Download Report</button>
+                                    <button class="btn-primary" id="shareResultsBtn">Share Results</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual Report Row -->
+                        <div class="visual-report card hidden" id="screenshotContainer">
+                            <h3>Visual Capture</h3>
+                            <div class="screenshot-wrapper">
+                                <img id="scanScreenshot" src="" alt="Scan Screenshot">
+                            </div>
+                        </div>
+
+                        <div class="bugs-list" id="bugsContainer">
+                            <!-- Bugs will be injected here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Fix Modal -->
+    <div id="fixModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <div class="ai-badge">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="#8b5cf6" />
+                    </svg>
+                    AI Fix Suggestion
+                </div>
+                <h3 id="fixBugTitle">Bug Title</h3>
+            </div>
+            <div class="modal-body">
+                <div class="fix-explanation">
+                    <h4>Why this is a problem:</h4>
+                    <p id="fixExplanation">...</p>
+                </div>
+                <div class="fix-steps">
+                    <h4>Step-by-step fix:</h4>
+                    <ul id="fixStepsList"></ul>
+                </div>
+                <div class="fix-code">
+                    <div class="code-header">
+                        <span id="fixLanguage">JAVASCRIPT</span>
+                        <button class="copy-code">Copy</button>
+                    </div>
+                    <pre><code id="fixCodeBlock">...</code></pre>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary btn-full" id="closeFixModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
