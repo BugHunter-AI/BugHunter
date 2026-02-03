@@ -387,6 +387,66 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // ===================================
+// BILLING & SUBSCRIPTIONS (Stripe)
+// ===================================
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+// Create Stripe Checkout Session
+app.post('/api/create-checkout', async (req, res) => {
+    try {
+        const { planId, email } = req.body;
+
+        const priceIds = {
+            starter: process.env.STRIPE_PRICE_STARTER,
+            pro: process.env.STRIPE_PRICE_PRO,
+            business: process.env.STRIPE_PRICE_BUSINESS
+        };
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            customer_email: email,
+            line_items: [{
+                price: priceIds[planId],
+                quantity: 1,
+            }],
+            mode: 'subscription',
+            success_url: `${process.env.FRONTEND_URL}/dashboard.html?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.FRONTEND_URL}/dashboard.html?status=cancelled`,
+        });
+
+        res.json({ success: true, sessionId: session.id, url: session.url });
+    } catch (error) {
+        console.error('❌ Stripe checkout error:', error);
+        res.status(500).json({ error: 'Failed to create checkout session' });
+    }
+});
+
+// Stripe Webhook (To update user status after payment)
+app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    } catch (err) {
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+        // Update user's plan in your db.json
+        const user = users.find(u => u.email === session.customer_email);
+        if (user) {
+            user.plan = 'active';
+            saveData();
+        }
+    }
+
+    res.json({ received: true });
+});
+
+// ===================================
 // STATISTICS
 // ===================================
 
