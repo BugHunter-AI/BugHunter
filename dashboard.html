@@ -40,7 +40,7 @@
                     </svg>
                     Overview
                 </a>
-                <a href="#" class="nav-item" data-section="new-scan">
+                <a href="#" class="nav-item" data-section="newScan">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10" />
                         <line x1="12" y1="8" x2="12" y2="16" />
@@ -270,6 +270,74 @@
 
                         <div class="bugs-list" id="bugsContainer">
                             <!-- Bugs will be injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- History Section -->
+                <section id="historySection" class="dashboard-section">
+                    <div class="card">
+                        <h3>Scan History</h3>
+                        <p class="subtitle">View and manage your previous audits.</p>
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Project URL</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Score</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Dynamic History -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Integrations & Settings Section -->
+                <section id="integrationsSection" class="dashboard-section">
+                    <div class="layout-grid">
+                        <div class="card profile-info">
+                            <h3>Account Profile</h3>
+                            <div class="profile-row">
+                                <label>Full Name</label>
+                                <input type="text" id="profileName" value="John Doe">
+                            </div>
+                            <div class="profile-row">
+                                <label>Email Address</label>
+                                <input type="email" id="profileEmail" value="john@example.com" disabled>
+                            </div>
+                            <button class="btn-primary" id="updateProfileBtn">Save Changes</button>
+                        </div>
+
+                        <!-- Team Management Section -->
+                        <div class="card team-management">
+                            <h3>Team Collaboration</h3>
+                            <p class="subtitle">Invite your developers to this workspace.</p>
+                            <div class="profile-row">
+                                <label>Team Member Email</label>
+                                <div class="input-with-button">
+                                    <input type="email" id="inviteEmail" placeholder="colleague@company.com">
+                                    <button class="btn-primary" id="sendInviteBtn">Invite</button>
+                                </div>
+                            </div>
+                            <div id="teamList" class="team-list">
+                                <!-- Invitations shown here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card api-keys card-full">
+                        <h3>API & Integrations</h3>
+                        <p class="subtitle">Use these keys to connect BugHunter AI to your CI/CD pipeline.</p>
+                        <div class="api-key-row">
+                            <div class="key-info">
+                                <span class="key-label">Production Key</span>
+                                <code class="key-value">bh_live_8374hd923...</code>
+                            </div>
+                            <button class="btn-outline">Regenerate</button>
                         </div>
                     </div>
                 </section>

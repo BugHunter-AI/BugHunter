@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Quick Scan Button (Top Bar)
+    const quickScanBtn = document.getElementById('quickScanBtn');
+    if (quickScanBtn) {
+        quickScanBtn.addEventListener('click', () => {
+            // Find the "New Scan" nav item and trigger click
+            const scanTab = document.querySelector('[data-section="newScan"]');
+            if (scanTab) scanTab.click();
+            document.getElementById('scanUrl').focus();
+        });
+    }
+
     // 2. User Data handling
     const userData = JSON.parse(localStorage.getItem('bugHunterUser') || '{}');
     document.getElementById('userNameDisplay').textContent = userData.name || 'John Doe';
@@ -158,9 +169,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error(error);
-            alert(`Scan failed: ${error.message}. Make sure the backend server.js is running!`);
-            scanConfig.classList.remove('hidden');
-            scanLoader.classList.add('hidden');
+            const useSim = confirm(`Backend server not found!\n\nWould you like to run a "Simulated Demo" scan instead to see how it works?`);
+
+            if (useSim) {
+                // RUN SIMULATED SCAN
+                setTimeout(() => {
+                    const mockScan = {
+                        id: 'demo-' + Date.now(),
+                        url: url,
+                        status: 'completed',
+                        timestamp: new Date(),
+                        results: {
+                            bugs: [
+                                { type: 'ACCESSIBILITY', severity: 'critical', message: 'Missing ARIA labels on main navigation', location: 'nav > ul' },
+                                { type: 'SEO', severity: 'warning', message: 'Missing Meta Description', location: 'head' },
+                                { type: 'PERFORMANCE', severity: 'critical', message: 'Image size (4.2MB) is too large for mobile', location: 'img#hero' }
+                            ],
+                            aiAnalysis: { qualityScore: 78 }
+                        },
+                        summary: { totalBugs: 3 }
+                    };
+                    renderResults(mockScan);
+                }, 8000);
+            } else {
+                scanConfig.classList.remove('hidden');
+                scanLoader.classList.add('hidden');
+            }
         }
     });
 
