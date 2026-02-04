@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLoaderSteps();
 
         try {
-            // CALL THE REAL BACKEND
+            // CALL THE REAL BACKEND (The Engine)
             const response = await fetch('http://localhost:3000/api/scan', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -169,32 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error(error);
-            const useSim = confirm(`Backend server not found!\n\nWould you like to run a "Simulated Demo" scan instead to see how it works?`);
-
-            if (useSim) {
-                // RUN SIMULATED SCAN
-                setTimeout(() => {
-                    const mockScan = {
-                        id: 'demo-' + Date.now(),
-                        url: url,
-                        status: 'completed',
-                        timestamp: new Date(),
-                        results: {
-                            bugs: [
-                                { type: 'ACCESSIBILITY', severity: 'critical', message: 'Missing ARIA labels on main navigation', location: 'nav > ul' },
-                                { type: 'SEO', severity: 'warning', message: 'Missing Meta Description', location: 'head' },
-                                { type: 'PERFORMANCE', severity: 'critical', message: 'Image size (4.2MB) is too large for mobile', location: 'img#hero' }
-                            ],
-                            aiAnalysis: { qualityScore: 78 }
-                        },
-                        summary: { totalBugs: 3 }
-                    };
-                    renderResults(mockScan);
-                }, 8000);
-            } else {
-                scanConfig.classList.remove('hidden');
-                scanLoader.classList.add('hidden');
-            }
+            alert(`🛑 BACKEND ERROR: ${error.message}\n\nPlease ensure you have run "🚀_START_BUGHUNTER.bat" and it is still open!`);
+            scanConfig.classList.remove('hidden');
+            scanLoader.classList.add('hidden');
         }
     });
 
@@ -267,14 +244,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Attach Button Actions
         document.getElementById('downloadPdfBtn').onclick = () => {
+            if (scan.id.startsWith('demo-')) {
+                return alert('This is a Demo Scan. Start your backend (🚀_START_BUGHUNTER.bat) to generate real PDF reports!');
+            }
             window.open(`http://localhost:3000/api/scans/${scan.id}/pdf`, '_blank');
         };
 
         document.getElementById('shareResultsBtn').onclick = async () => {
-            const res = await fetch(`http://localhost:3000/api/scans/${scan.id}/share`, { method: 'POST' });
-            const data = await res.json();
-            if (data.success) {
-                alert(`Public link generated! Anyone with this link can view the report:\n\n${data.shareUrl}`);
+            if (scan.id.startsWith('demo-')) {
+                return alert('Sharing is disabled in Demo Mode. Connect your backend to generate public share links!');
+            }
+            try {
+                const res = await fetch(`http://localhost:3000/api/scans/${scan.id}/share`, { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    alert(`Public link generated! Anyone with this link can view the report:\n\n${data.shareUrl}`);
+                }
+            } catch (e) {
+                alert('Could not connect to server to generate share link.');
             }
         };
 

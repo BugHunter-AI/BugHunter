@@ -572,6 +572,7 @@ input:checked+.slider:before {
 .btn-outline {
     background: transparent;
     border: 1px solid var(--border);
+    color: var(--text-main);
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: 600;
